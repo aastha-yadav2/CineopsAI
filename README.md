@@ -450,8 +450,7 @@ CineOps AI goes beyond basic LLM prompts or simple wrappers:
 
 ## 18. License
 
-> [!CAUTION]
-> **Open Source Submission Notice**: An open-source license file (such as the MIT License) is currently missing from the repository root. A `LICENSE` file must be added prior to final hackathon submission.
+This project is open-source and licensed under the **[MIT License](LICENSE)**. See the `LICENSE` file in the repository root for full details.
 
 ---
 
