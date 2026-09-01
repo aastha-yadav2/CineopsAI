@@ -1,0 +1,24 @@
+# Secrets & Environment variables
+.env
+.env.local
+*.pem
+*.key
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Git & Caches
+.git/
+.gitignore
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Testing & Logs
+tests/
+*.log
+scratch/
