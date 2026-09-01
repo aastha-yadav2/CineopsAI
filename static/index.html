@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineOps AI - Autonomous Film Production Command Center</title>
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="dark-theme">
+
+  <!-- TOP HEADER / NAV BAR -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M2 8h20"/>
+            <path d="M6 4v4"/>
+            <path d="M10 4v4"/>
+            <path d="M14 4v4"/>
+            <path d="M18 4v4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">CINEOPS <span class="brand-accent">AI</span></span>
+          <span class="brand-subtitle">PRODUCTION COMMAND CENTER</span>
+        </div>
+      </div>
+
+      <!-- NAVIGATION TABS -->
+      <nav class="nav-tabs">
+        <button id="tab-input" class="nav-btn active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Script Input
+        </button>
+        <button id="tab-breakdown" class="nav-btn" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Screenplay Breakdown
+        </button>
+        <button id="tab-plan" class="nav-btn" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Production Plan
+        </button>
+      </nav>
+
+      <!-- SYSTEM STATUS BADGE -->
+      <div class="status-badge" id="backend-status">
+        <span class="status-dot offline"></span>
+        <span class="status-text">Checking API...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container">
+
+    <!-- SECTION 1: SCRIPT INPUT & HERO -->
+    <section id="section-input" class="view-section active">
+      <div class="hero-banner">
+        <h1 class="hero-title">Autonomous Film Production Intelligence</h1>
+        <p class="hero-desc">
+          Transform raw screenplays into structured 11-parameter scene breakdowns, execute targeted Parallel web research, and generate optimized shooting roadmaps.
+        </p>
+      </div>
+
+      <div class="input-grid">
+        <!-- SCREENPLAY TEXT INPUT -->
+        <div class="card input-card">
+          <div class="card-header">
+            <div class="header-title-group">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <h3>Screenplay Text Input</h3>
+            </div>
+            <button id="btn-load-sample" class="btn btn-secondary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Load Sample Script
+            </button>
+          </div>
+          <div class="card-body">
+            <textarea id="script-input" class="code-textarea" placeholder="Paste screenplay text here (INT./EXT. scene headers, action lines, character cues, dialogue)..."></textarea>
+            
+            <div class="input-actions">
+              <button id="btn-analyze" class="btn btn-primary btn-lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Analyze Screenplay & Build Plan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REAL INTERACTIVE PDF UPLOAD BOX -->
+        <div class="card pdf-card">
+          <div class="card-header">
+            <div class="header-title-group">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <h3>PDF Screenplay Upload</h3>
+            </div>
+            <span class="badge badge-accent">PDF Active</span>
+          </div>
+          <div class="card-body pdf-body">
+            <input type="file" id="pdf-file-input" class="hidden-file-input" accept=".pdf,application/pdf">
+            
+            <div class="pdf-dropzone" id="pdf-dropzone">
+              <div class="dropzone-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <p class="dropzone-text">Drag & Drop Screenplay PDF</p>
+              <p class="dropzone-subtext">or click to browse filesystem (.pdf up to 10MB)</p>
+              
+              <div id="pdf-file-info" class="pdf-file-info hidden">
+                <span id="pdf-filename" class="pdf-filename"></span>
+                <button id="btn-remove-pdf" class="btn-remove-file" title="Remove PDF">&times;</button>
+              </div>
+            </div>
+
+            <div class="input-actions" style="margin-top: 1.25rem;">
+              <button id="btn-analyze-pdf" class="btn btn-primary btn-lg" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polygon points="10 11 15 14 10 17 10 11"/></svg>
+                Analyze PDF Screenplay
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: SCREENPLAY BREAKDOWN VIEW -->
+    <section id="section-breakdown" class="view-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Screenplay Production Breakdown</h2>
+          <p class="section-subtitle">Structured 11-parameter scene extraction by CineOps Analyst Agent</p>
+        </div>
+      </div>
+
+      <!-- KPI METRICS BAR -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Total Scenes</span>
+          <span class="kpi-value" id="kpi-scenes">0</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Cast Members</span>
+          <span class="kpi-value" id="kpi-cast">0</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Key Props</span>
+          <span class="kpi-value" id="kpi-props">0</span>
+        </div>
+        <div class="kpi-card kpi-hazard">
+          <span class="kpi-label">High Risk Scenes</span>
+          <span class="kpi-value" id="kpi-risks">0</span>
+        </div>
+      </div>
+
+      <!-- SCENE FILTER BUTTONS -->
+      <div class="filter-bar">
+        <span class="filter-label">Filter Scenes:</span>
+        <button class="filter-btn active" data-filter="all">All Scenes</button>
+        <button class="filter-btn" data-filter="INT">INT (Interior)</button>
+        <button class="filter-btn" data-filter="EXT">EXT (Exterior)</button>
+        <button class="filter-btn" data-filter="NIGHT">Night Shoots</button>
+      </div>
+
+      <!-- SCENES GRID -->
+      <div id="scenes-grid" class="scenes-grid">
+        <!-- Rendered via app.js -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: PRODUCTION PLAN DASHBOARD -->
+    <section id="section-plan" class="view-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Actionable Production Plan</h2>
+          <p class="section-subtitle">Synthesized shooting schedule, location units, resource matrix, and Parallel research references</p>
+        </div>
+      </div>
+
+      <!-- EXECUTIVE SUMMARY BANNER -->
+      <div class="card summary-card">
+        <div class="summary-header">
+          <h3 id="plan-title">Production Plan Title</h3>
+          <span class="badge badge-accent" id="plan-days-badge">0 Shooting Days</span>
+        </div>
+        <p id="plan-overall-summary" class="summary-text"></p>
+        <div class="summary-reasoning">
+          <span class="reasoning-label">Strategic Reasoning:</span>
+          <p id="plan-strategic-reasoning"></p>
+        </div>
+      </div>
+
+      <!-- DASHBOARD TABS -->
+      <div class="dashboard-tabs">
+        <button class="d-tab active" data-dtab="schedule">Shooting Schedule</button>
+        <button class="d-tab" data-dtab="groupings">Location Units</button>
+        <button class="d-tab" data-dtab="resources">Resource Matrix</button>
+        <button class="d-tab" data-dtab="risks">Risk Management</button>
+        <button class="d-tab" data-dtab="research">Parallel Research Hub</button>
+      </div>
+
+      <!-- TAB 1: SHOOTING SCHEDULE -->
+      <div id="dtab-schedule" class="dtab-content active">
+        <div id="schedule-timeline" class="schedule-timeline"></div>
+      </div>
+
+      <!-- TAB 2: LOCATION UNITS -->
+      <div id="dtab-groupings" class="dtab-content">
+        <div id="groupings-grid" class="groupings-grid"></div>
+      </div>
+
+      <!-- TAB 3: RESOURCE MATRIX -->
+      <div id="dtab-resources" class="dtab-content">
+        <div id="resources-grid" class="resources-grid"></div>
+      </div>
+
+      <!-- TAB 4: RISK MANAGEMENT -->
+      <div id="dtab-risks" class="dtab-content">
+        <div id="risks-grid" class="risks-grid"></div>
+      </div>
+
+      <!-- TAB 5: PARALLEL RESEARCH HUB -->
+      <div id="dtab-research" class="dtab-content">
+        <div id="research-grid" class="research-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PROGRESS MODAL -->
+  <div id="progress-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-spinner"></div>
+      <h3 class="modal-title">CineOps Autonomous Pipeline Active</h3>
+      <p class="modal-subtitle">Processing screenplay through multi-agent analysis and web research...</p>
+      
+      <div class="progress-stages">
+        <div class="stage-item" id="stage-1">
+          <span class="stage-dot"></span>
+          <span class="stage-text">Stage 1: Screenplay Analyst Agent (Structured Breakdown)</span>
+        </div>
+        <div class="stage-item" id="stage-2">
+          <span class="stage-dot"></span>
+          <span class="stage-text">Stage 2: Parallel Search Service (Safety & Permit Research)</span>
+        </div>
+        <div class="stage-item" id="stage-3">
+          <span class="stage-dot"></span>
+          <span class="stage-text">Stage 3: Production Planner Agent (Schedule & Resources)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS SCRIPT -->
+  <script src="/app.js"></script>
+</body>
+</html>

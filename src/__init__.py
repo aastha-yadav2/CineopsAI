@@ -1,0 +1,3 @@
+"""
+CineOps AI package initialization.
+"""
