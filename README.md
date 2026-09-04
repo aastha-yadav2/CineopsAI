@@ -1,6 +1,6 @@
 # CineOps AI
 
-> An agentic AI production command center that turns screenplay PDFs into actionable shooting plans.
+> An agentic AI production command center that turns screenplay PDFs into actionable, research-backed shooting plans.
 
 ---
 
@@ -8,23 +8,25 @@
 
 Film production teams face immense complexity when translating creative screenplays into execution-ready shooting plans. Assistant Directors (ADs), Line Producers, and Unit Production Managers (UPMs) must manually read screenplays scene-by-scene to identify:
 
-* **Locations & Set Types** (INT/EXT, Day/Night)
-* **Cast & Characters** required per scene
-* **Props, Vehicles, and Costumes**
-* **Weather, Environment, and Time-of-Day constraints**
-* **Special Production Specs** (stunts, rain machines, high falls, pyrotechnics)
-* **Safety Risks & Environmental Hazards**
-* **Equipment & Crew Resource Needs**
-* **Location Unit Groupings & Shooting Schedules**
-* **External Legal & Technical Research Requirements** (permits, safety codes)
+- **Locations & Set Types** (INT/EXT, Day/Night)
+- **Cast & Characters** required per scene
+- **Props, Vehicles, and Costumes**
+- **Weather, Environment, and Time-of-Day constraints**
+- **Special Production Specs** (stunts, rain machines, high falls, pyrotechnics)
+- **Safety Risks & Environmental Hazards**
+- **Equipment & Crew Resource Needs**
+- **Location Unit Groupings & Shooting Schedules**
+- **External Legal & Technical Research Requirements** (permits, safety codes)
 
-As screenplays grow to dozens or hundreds of pages, manual breakdowns become prone to human oversight, costly scheduling conflicts, safety oversights, and budget overruns.
+As screenplays grow to dozens or hundreds of pages, manual breakdowns become prone to human oversight, scheduling conflicts, safety oversights, and budget overruns.
 
 ---
 
 ## 2. Solution
 
-**CineOps AI** automates and elevates screenplay production management through an end-to-end agentic workflow. Filmmakers can upload raw screenplay text or PDF files and receive a structured, highly optimized production plan within seconds.
+**CineOps AI** automates screenplay production management through an end-to-end agentic workflow.
+
+Filmmakers can upload raw screenplay text or PDF files and receive a structured production breakdown, real-world production research, risk analysis, resource requirements, and an actionable shooting plan.
 
 ### High-Level Workflow
 
@@ -33,162 +35,193 @@ Screenplay PDF / Text Ingestion
   └──▶ PDFExtractorService
         └──▶ Screenplay Analyst Agent (Google ADK)
               └──▶ 11-Parameter Scene Production Breakdown
-                    └──▶ Parallel Search Service (Official Parallel Web API)
-                          └──▶ Structured Web Research & Guidelines
+                    └──▶ Dynamic Parallel Search Research
+                          └──▶ Production Research & Guidelines
                                 └──▶ Production Planner Agent (Google ADK)
-                                      └──▶ Actionable Production Plan Dashboard
+                                      └──▶ Production Plan Dashboard
 ```
 
-CineOps AI transforms unstructured screenplay prose into structured production intelligence, allowing filmmakers to focus on creative vision while maintaining rigorous safety and operational standards.
+CineOps AI transforms unstructured screenplay prose into structured production intelligence, helping filmmakers move from screenplay to production-ready decisions.
 
 ---
 
 ## 3. Key Features
 
-* **PDF Screenplay Upload**: Native drag-and-drop PDF ingestion powered by `pypdf` via `PDFExtractorService` (supporting files up to 10MB).
-* **Direct Text Analysis**: Plaintext screenplay input for fast local testing and development.
-* **11-Parameter Scene Breakdown**: Autonomous extraction of scene numbers, location type (INT/EXT), location name, time of day, scene summary, characters, props, weather/environment, special production requirements, hazards, and estimated shooting duration.
-* **Parallel Web Research**: Autonomous execution of real-world external research via the official **Parallel Search API** for location safety rules, rain machine guidelines, GFCI electrical precautions, and drone filming permits.
-* **Smart Scene Grouping**: Algorithmic consolidation of scenes sharing locations and lighting requirements to minimize unit moves.
-* **Day-by-Day Shooting Schedule**: Intelligent daily breakdown balancing working hours and crew fatigue.
-* **Resource Matrix**: Categorized breakdown of required camera gear, lighting packages, stunt equipment, and special effects.
-* **Risk Management Matrix**: Categorized risk assessments (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`) paired with actionable mitigation protocols.
-* **Parallel Research References**: Linked research citations and key insights for production safety officers.
-* **Cinematic Dark Web Dashboard**: Single-page production command center built with custom CSS glassmorphism, responsive grids, and live API stage progress animations.
-* **FastAPI REST API**: High-performance RESTful API with Pydantic request/response validation.
-* **Mock/Offline Development Mode**: 100% deterministic local testing mode making zero external network calls while Google Cloud billing activation is pending.
+- **PDF Screenplay Upload**: Native drag-and-drop PDF ingestion powered by `pypdf` via `PDFExtractorService`, supporting files up to 10MB.
+- **Direct Text Analysis**: Plaintext screenplay input for fast local testing and development.
+- **11-Parameter Scene Breakdown**: Autonomous extraction of scene numbers, location type, location name, time of day, scene summary, characters, props, weather/environment, special production requirements, production dependencies, and production risks.
+- **Dynamic Parallel Web Research**: Uses the official Parallel Search API to research screenplay-specific production requirements instead of relying on generic research queries.
+- **Smart Scene Grouping**: Groups scenes by compatible locations and production requirements to reduce unnecessary unit moves.
+- **Day-by-Day Shooting Schedule**: Generates structured shooting-day allocations based on scene and production constraints.
+- **Resource Matrix**: Identifies production-relevant equipment, crew, props, lighting, stunt, and special-effect requirements.
+- **Risk Management Matrix**: Categorizes production risks as CRITICAL, HIGH, MEDIUM, or LOW with actionable mitigation guidance.
+- **Parallel Research References**: Provides research results and citations that support production decisions.
+- **Cinematic Production Dashboard**: Dark, production-focused web interface with responsive cards, filters, progress states, schedules, resources, and risk management.
+- **FastAPI REST API**: Structured REST endpoints with Pydantic validation.
+- **Optional Offline Development Mode**: Deterministic mock mode is available for local development and testing without external API calls. Production runs with live Gemini and Parallel integrations.
 
 ---
 
 ## 4. Agentic Workflow
 
-CineOps AI is built using a multi-agent modular architecture powered by the Google Agent Development Kit (ADK) and the Parallel Search API.
+CineOps AI is built using a multi-agent modular architecture powered by the Google Agent Development Kit (ADK), Gemini 2.5 Flash, and the Parallel Search API.
 
 ```text
 ┌─────────────────────────────────────────────────────────┐
-│                 Screenplay Ingestion                    │
-│          (Text Input or PDF File Upload)                │
+│                 Screenplay Ingestion                     │
+│          (Text Input or PDF File Upload)                 │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│               PDFExtractorService                       │
-│        (Extracts raw plain text streams)                │
+│               PDFExtractorService                        │
+│        (Extracts screenplay text from PDF)               │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│            Screenplay Analyst Agent                     │
-│    (Google ADK Agent / Gemini 2.5 Flash Model)          │
-│    - Extracts 11-parameter scene breakdown              │
-│    - Identifies production requirements & hazards       │
+│            Screenplay Analyst Agent                      │
+│    (Google ADK / Gemini 2.5 Flash via Vertex AI)         │
+│    - Extracts structured scene information                │
+│    - Identifies production requirements & hazards         │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│            ScreenplayProductionAnalysis                 │
-│         (Validated Pydantic Data Model)                 │
+│            ScreenplayProductionAnalysis                  │
+│         (Validated Pydantic Data Model)                  │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│             Parallel Search Service                     │
-│    (Official Parallel Search Web API)                   │
-│    - Performs targeted production safety searches       │
-│    - Fetches ranked excerpts & search IDs               │
+│             Parallel Search Service                      │
+│        (Official Parallel Search API)                    │
+│    - Generates screenplay-specific research queries        │
+│    - Deduplicates relevant research requests               │
+│    - Returns structured research results                   │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│            Production Research Data                     │
-│         (ProductionResearchResponse Model)              │
+│            Production Research Data                      │
+│         (ProductionResearchResponse Model)                │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│            Production Planner Agent                     │
-│    (Google ADK Agent / Gemini 2.5 Flash Model)          │
-│    - Synthesizes analysis + research                    │
-│    - Groups scenes by location unit                     │
-│    - Generates shooting schedule, resources & risks     │
+│            Production Planner Agent                      │
+│    (Google ADK / Gemini 2.5 Flash via Vertex AI)          │
+│    - Synthesizes analysis + research                      │
+│    - Groups scenes and locations                          │
+│    - Generates schedule, resources & risks                 │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│                 ProductionPlan                          │
-│          (Validated Pydantic Model)                     │
+│                 ProductionPlan                            │
+│          (Validated Pydantic Model)                       │
 └────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│             CineOps AI Web Dashboard                    │
-│       (Interactive Command Center Interface)            │
+│             CineOps AI Web Dashboard                      │
+│       (Interactive Production Command Center)              │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ### Component Responsibilities
 
-1. **`PDFExtractorService`**: Extracts clean screenplay text from PDF byte streams.
-2. **`Screenplay Analyst Agent`**: Parses raw screenplay text into structured `ScreenplayProductionAnalysis` models.
-3. **`Parallel Search Service`**: Queries the Parallel Search API to gather safety regulations, electrical codes, and filming permit details.
-4. **`Production Planner Agent`**: Synthesizes the breakdown and research data to construct an optimized `ProductionPlan`.
+- **PDFExtractorService**: Extracts screenplay text from uploaded PDF byte streams.
+- **Screenplay Analyst Agent**: Uses Google ADK and Gemini 2.5 Flash to convert screenplay text into structured `ScreenplayProductionAnalysis`.
+- **Parallel Search Service**: Performs screenplay-specific web research for production safety, technical requirements, regulations, permits, and other relevant constraints.
+- **Production Planner Agent**: Combines screenplay analysis and external research to construct an actionable `ProductionPlan`.
+- **Production Planner Service**: Reconciles locations, scenes, resources, risks, and schedule information so important screenplay details are not silently dropped.
 
 ---
 
 ## 5. Google Cloud / Gemini Integration
 
-CineOps AI is designed from the ground up to utilize Google Cloud and Gemini AI technologies:
+CineOps AI uses Google Cloud and Gemini AI technologies as core components of its production workflow.
 
-* **Google Cloud Vertex AI**: Hosted foundation for enterprise AI agent execution (`GOOGLE_GENAI_USE_VERTEXAI=TRUE`).
-* **Google Agent Development Kit (ADK)**: Core agent framework defining system prompts, tools, and execution flows (`google-genai`).
-* **Gemini Model Configuration**: Configurable via `CINEOPS_GEMINI_MODEL=gemini-2.5-flash` environment variable.
-* **Google Cloud Authentication**: Integrates via Application Default Credentials (ADC) for seamless deployment to Google Cloud Run.
-* **Configured Project & Region**: Project `cineops-ai-507217`, Location `us-central1`.
+- **Google Cloud Vertex AI**: Provides the runtime environment for Gemini model execution.
+- **Google Agent Development Kit (ADK)**: Provides the agent framework, tools, prompts, and orchestration layer.
+- **Gemini 2.5 Flash**: Used by the Screenplay Analyst Agent and Production Planner Agent.
+- **Google Cloud Authentication**: Uses Application Default Credentials (ADC) for Cloud Run deployment.
+- **Production Project**: `cineops-ai-507217`
+- **Production Region**: `us-central1`
+- **Production Execution Mode**: `CINEOPS_MOCK_MODE=0`
 
-> [!NOTE]
-> **Billing Status Notice**: Gemini live execution via Vertex AI is fully implemented and configured in the agent codebase (`src/agents/screenplay_agent.py` and `src/agents/production_planner_agent.py`). However, live Gemini API calls are currently disabled in local testing (`CINEOPS_MOCK_MODE=1`) while Google Cloud billing activation is pending.
+### Live Production Status
+
+CineOps AI is deployed on Google Cloud Run and runs with live Gemini 2.5 Flash through Vertex AI.
+
+The production pipeline is:
+
+```text
+Screenplay
+    ↓
+Gemini Screenplay Analysis
+    ↓
+Parallel Search Research
+    ↓
+Gemini Production Planning
+    ↓
+Production Plan
+```
+
+Local development can optionally use deterministic mock mode to avoid external API calls.
 
 ---
 
 ## 6. Parallel Integration
 
-CineOps AI integrates the official **Parallel Search API** (`parallel-web` v1.3.3) to provide film production teams with real-time, external web research.
+CineOps AI integrates the official Parallel Search API using the `parallel-web` SDK to provide real-world production research.
 
-### Real Production Use Cases Tested
+### Dynamic Research
 
-During production planning, the Parallel Research Service queries web sources for:
-* **Rain Machine Safety**: GFCI electrical protection rules and wet-down set precautions.
-* **Night Shooting Hazards**: Lighting rig grounding and temporary power distribution codes.
-* **Drone Filming Permits**: FAA Part 107 licensing and commercial airspace clearance.
-* **Pyrotechnic & Stunt Protocols**: Fire marshal presence and emergency fall protection.
+Research queries are derived from the actual screenplay analysis rather than using a single hardcoded research topic.
+
+Depending on screenplay content, CineOps can research areas such as:
+
+- Rain / Wet-Location Safety
+- Electrical Safety
+- Drone Filming Requirements
+- Working-at-Height Safety
+- Stunt and Fall Protection
+- Pyrotechnic / Special Effects Requirements
+- Water-Side Filming Considerations
+- Weather-Related Production Constraints
+- Technical Equipment Requirements
+- Permits and Regulatory Requirements
+
+The system deduplicates repeated research requirements within a production-planning request to reduce unnecessary external calls.
 
 ### Live API Verification
 
-The Parallel Search integration has been verified live against `api.parallel.ai`:
-* **HTTP Status**: `200 OK`
-* **Search ID**: `search_68fe02dd7627645cefdf687e51402f0a`
-* **Results Returned**: 10 real-time structured search items with ranked excerpts and citations.
+The Parallel Search integration has been verified against the official Parallel Search API with successful structured search responses.
 
-> [!IMPORTANT]
-> The Parallel API key is read strictly from the local `.env` environment variable (`PARALLEL_API_KEY`) and is never committed, hardcoded, or exposed in API responses.
+The application uses the Parallel API at runtime rather than simply mentioning Parallel in documentation.
+
+The Parallel API key is stored as an environment variable / managed secret and is never hardcoded into source code or returned through API responses.
 
 ---
 
 ## 7. Tech Stack
 
 | Layer | Technology |
-| :--- | :--- |
-| **AI Agents & Framework** | Google Agent Development Kit (ADK) (`google-genai`) |
-| **LLM Model** | Gemini 2.5 Flash via Google Cloud Vertex AI |
-| **Cloud Infrastructure** | Google Cloud Platform (Vertex AI, Cloud Run ready) |
-| **External Web Research** | Parallel Search API (`parallel-web` SDK) |
-| **Backend Framework** | FastAPI |
-| **Language & Runtime** | Python 3.10+ |
-| **Data Validation** | Pydantic v2 |
-| **PDF Extraction** | `pypdf` via `PDFExtractorService` |
-| **Frontend UI** | Vanilla HTML5, CSS3 (Glassmorphism), JavaScript (ES6) |
-| **ASGI Web Server** | Uvicorn |
-| **Test Suite** | Pytest (27 automated tests) |
+|---|---|
+| AI Agents & Framework | Google Agent Development Kit (ADK) |
+| LLM Model | Gemini 2.5 Flash via Google Cloud Vertex AI |
+| Cloud Infrastructure | Google Cloud Platform / Cloud Run / Vertex AI |
+| External Web Research | Parallel Search API (parallel-web) |
+| Backend Framework | FastAPI |
+| Language & Runtime | Python 3.10+ |
+| Data Validation | Pydantic v2 |
+| PDF Extraction | pypdf |
+| Frontend UI | HTML5, CSS3, JavaScript (ES6) |
+| ASGI Web Server | Uvicorn |
+| Containerization | Docker |
+| Testing | Pytest |
 
 ---
 
@@ -199,44 +232,44 @@ cineops/
 ├── .env                    # Local environment variables (Git-ignored)
 ├── .env.example            # Environment configuration template
 ├── .gitignore              # Git ignore configuration
-├── README.md               # Hackathon project documentation
-├── requirements.txt        # Python package dependencies
+├── LICENSE                 # MIT License
+├── README.md               # Project documentation
+├── requirements.txt        # Python dependencies
 ├── src/
 │   ├── __init__.py
-│   ├── main.py             # CLI entrypoint for local execution
+│   ├── main.py
 │   ├── agents/
 │   │   ├── __init__.py
-│   │   ├── cineops_agent.py             # Root agent definition
-│   │   ├── production_planner_agent.py  # Production planning agent
-│   │   └── screenplay_agent.py          # Screenplay analysis agent
+│   │   ├── cineops_agent.py
+│   │   ├── production_planner_agent.py
+│   │   └── screenplay_agent.py
 │   ├── api/
 │   │   ├── __init__.py
-│   │   ├── main.py             # FastAPI application & route handlers
-│   │   └── schemas.py          # Request and response API schemas
+│   │   ├── main.py
+│   │   └── schemas.py
 │   ├── models/
 │   │   ├── __init__.py
-│   │   ├── planner.py          # Production plan Pydantic models
-│   │   ├── production.py       # Production breakdown models
-│   │   └── screenplay.py       # Scene breakdown models
+│   │   ├── planner.py
+│   │   ├── production.py
+│   │   └── screenplay.py
 │   └── services/
 │       ├── __init__.py
-│       ├── parallel_search.py            # Parallel Search API service
-│       ├── pdf_extractor.py              # pypdf extraction service
-│       ├── production_planner_service.py # Planning service layer
-│       └── screenplay_parser.py          # Screenplay parsing service layer
+│       ├── parallel_search.py
+│       ├── pdf_extractor.py
+│       ├── production_planner_service.py
+│       └── screenplay_parser.py
 ├── static/
-│   ├── index.html          # Web dashboard layout
-│   ├── styles.css          # Dark cinematic styling & components
-│   └── app.js              # Web dashboard API & UI logic
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
 └── tests/
     ├── __init__.py
     ├── fixtures/
-    │   └── sample_screenplay.txt
-    ├── test_api.py                 # REST API unit tests
-    ├── test_parallel_search.py     # Parallel search service tests
-    ├── test_pdf_api.py             # PDF extraction & PDF API tests
-    ├── test_production_planner.py  # Production planner agent tests
-    └── test_screenplay_analysis.py # Screenplay analyst agent tests
+    ├── test_api.py
+    ├── test_parallel_search.py
+    ├── test_pdf_api.py
+    ├── test_production_planner.py
+    └── test_screenplay_analysis.py
 ```
 
 ---
@@ -244,225 +277,326 @@ cineops/
 ## 9. API Documentation
 
 ### 1. Health Status Check
-* **Endpoint**: `GET /health`
-* **Purpose**: Verifies backend API service availability.
-* **Output**: `{"status": "ok", "service": "cineops-ai"}`
+
+- **Endpoint**: `GET /health`
+- **Purpose**: Verifies backend service availability.
+- **Output**:
+
+```json
+{
+  "status": "ok",
+  "service": "cineops-ai"
+}
+```
 
 ### 2. Screenplay Text Analysis
-* **Endpoint**: `POST /api/analyze-screenplay`
-* **Purpose**: Extracts structured 11-parameter breakdown from screenplay text.
-* **Request Body**:
-  ```json
-  {
-    "script_text": "INT. POLICE PRECINCT - NIGHT\nDetective Miller reads tablet.",
-    "mock_mode": true
-  }
-  ```
-* **Response**: `ScreenplayProductionAnalysis` object containing detailed scene breakdown array.
+
+- **Endpoint**: `POST /api/analyze-screenplay`
+- **Purpose**: Extracts a structured screenplay production breakdown from screenplay text.
+- **Response**: `ScreenplayProductionAnalysis` object containing detailed scene information.
 
 ### 3. Generate Production Plan
-* **Endpoint**: `POST /api/generate-plan`
-* **Purpose**: Generates a production plan from pre-analyzed screenplay data and optional research.
-* **Request Body**:
-  ```json
-  {
-    "analysis": { ... },
-    "research_data": null,
-    "mock_mode": true
-  }
-  ```
-* **Response**: `ProductionPlan` object.
+
+- **Endpoint**: `POST /api/generate-plan`
+- **Purpose**: Generates a production plan from screenplay analysis and optional research data.
+- **Response**: `ProductionPlan` object.
 
 ### 4. Combined Text Pipeline
-* **Endpoint**: `POST /api/analyze`
-* **Purpose**: Executes full end-to-end pipeline (*Screenplay Analyst ➔ Parallel Research ➔ Production Planner*).
-* **Request Body**:
-  ```json
-  {
-    "script_text": "INT. POLICE PRECINCT - NIGHT\nDetective Miller inspects tablet.",
-    "mock_mode": true
-  }
-  ```
-* **Response**: `ProductionPlan` object.
+
+- **Endpoint**: `POST /api/analyze`
+- **Purpose**: Executes the complete workflow: Screenplay Analyst → Parallel Research → Production Planner
+- **Response**: `ProductionPlan` containing both the production plan and screenplay analysis.
 
 ### 5. PDF Screenplay Upload Pipeline
-* **Endpoint**: `POST /api/analyze-pdf`
-* **Purpose**: Accepts multipart PDF upload, extracts text, and executes the complete production planning pipeline.
-* **Input**: `multipart/form-data` with `file` (PDF file up to 10MB) and optional `mock_mode` (`true`/`false`).
-* **Response**: `ProductionPlan` object.
+
+- **Endpoint**: `POST /api/analyze-pdf`
+- **Purpose**: Accepts a screenplay PDF, extracts its text, analyzes the actual uploaded screenplay, performs relevant production research, and generates the production plan.
+- **Input**: `multipart/form-data` with `file` (PDF up to 10MB).
+- **Response**: `ProductionPlan` containing screenplay analysis, schedule, locations, resources, risks, and research references.
 
 ---
 
 ## 10. Local Setup
 
 ### Prerequisites
-* Python 3.10 or higher
-* Git
+
+- Python 3.10 or higher
+- Git
 
 ### Installation Steps
 
-1. **Clone Repository**:
-   ```bash
-   git clone https://github.com/aastha-yadav2/CineopsAI.git
-   cd CineopsAI
-   ```
+**Clone Repository**
 
-2. **Create Virtual Environment**:
-   ```powershell
-   python -m venv .venv
-   .venv\Scripts\Activate.ps1
-   ```
+```bash
+git clone https://github.com/aastha-yadav2/CineopsAI.git
+cd CineopsAI
+```
 
-3. **Install Dependencies**:
-   ```powershell
-   pip install -r requirements.txt
-   ```
+**Create Virtual Environment**
 
-4. **Configure Environment Variables**:
-   Create a `.env` file in the project root based on `.env.example`:
-   ```env
-   # Google Cloud / Vertex AI Authentication
-   GOOGLE_GENAI_USE_VERTEXAI=TRUE
-   GOOGLE_CLOUD_PROJECT=cineops-ai-507217
-   GOOGLE_CLOUD_LOCATION=us-central1
-   CINEOPS_GEMINI_MODEL=gemini-2.5-flash
+```bash
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
 
-   # Execution Mode (1 = Offline Mock Mode; 0 = Live Gemini & Parallel)
-   CINEOPS_MOCK_MODE=1
+**Install Dependencies**
 
-   # Parallel Search API Key
-   PARALLEL_API_KEY=your_parallel_api_key_here
-   ```
+```bash
+pip install -r requirements.txt
+```
+
+**Configure Environment Variables**
+
+Create a `.env` file based on `.env.example`:
+
+```env
+# Google Cloud / Vertex AI
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT=cineops-ai-507217
+GOOGLE_CLOUD_LOCATION=us-central1
+CINEOPS_GEMINI_MODEL=gemini-2.5-flash
+
+# Execution Mode
+# 1 = Offline mock mode for local development
+# 0 = Live Gemini + Parallel Search
+CINEOPS_MOCK_MODE=1
+
+# Parallel Search API
+PARALLEL_API_KEY=your_parallel_api_key_here
+```
+
+For local development, `CINEOPS_MOCK_MODE=1` can be used for deterministic offline testing.
+
+The deployed production environment runs with `CINEOPS_MOCK_MODE=0`.
 
 ---
 
 ## 11. Running the Application
 
-Launch the FastAPI application server locally using Uvicorn:
+Launch the FastAPI application locally using Uvicorn:
 
-```powershell
+```bash
 .venv\Scripts\python.exe -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
 ```
 
-### Access Points
-* **Web Command Center**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-* **Interactive API Docs (Swagger)**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-* **API Health Check**: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+### Local Access Points
+
+- **Web Command Center**: http://127.0.0.1:8000/
+- **Interactive API Docs**: http://127.0.0.1:8000/docs
+- **Health Check**: http://127.0.0.1:8000/health
+
+### Live Demo
+
+The deployed CineOps AI application is available at:
+
+https://cineops-ai-408484150701.us-central1.run.app
 
 ### User Journeys
 
-#### Text Screenplay Flow:
-1. Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
-2. Click **"Load Sample Script"** (or paste custom text).
-3. Click **"Analyze Screenplay & Build Plan"**.
+**Text Screenplay Flow**
 
-#### PDF Screenplay Flow:
-1. Drag and drop a `.pdf` file into the PDF upload dropzone.
-2. Click **"Analyze PDF Screenplay"**.
+1. Open the CineOps AI dashboard.
+2. Enter screenplay text or use "Try Example Script".
+3. Click "Analyze Screenplay & Build Plan".
+4. Review the screenplay breakdown.
+5. Explore the generated production plan.
+
+**PDF Screenplay Flow**
+
+1. Open the CineOps AI dashboard.
+2. Drag and drop a `.pdf` screenplay into the upload area.
+3. Click "Analyze PDF Screenplay".
+4. Wait for the analysis stages to complete.
+5. Review the screenplay breakdown.
+6. Explore locations, resources, risks, schedule, and Parallel research.
 
 ---
 
 ## 12. Testing
 
-CineOps AI includes a test suite with 100% offline mock execution mode.
+CineOps AI includes an automated test suite with deterministic offline mock execution for local testing.
 
-Run the test suite:
+Run:
 
-```powershell
+```bash
 .venv\Scripts\python.exe -m pytest tests/ -v
 ```
 
-### Verification Result
-```text
-======================= 27 passed in 3.28s =======================
-```
-* **Test Count**: 27 passed unit tests.
-* **Network Isolation**: Zero external API calls occur during mock mode tests.
+The test suite covers screenplay analysis, PDF extraction, API behavior, production planning, and Parallel Search integration behavior.
+
+Production verification additionally includes live Cloud Run endpoint testing with `CINEOPS_MOCK_MODE=0`.
 
 ---
 
 ## 13. Security
 
-* **Git Exclusion**: `.env` and `.venv` are strictly ignored via `.gitignore`.
-* **Environment Variable Storage**: All credentials (`PARALLEL_API_KEY`, Google Cloud settings) are loaded exclusively via environment variables.
-* **Zero Credential Exposure**: API keys are never returned in REST responses or logged to console outputs.
-* **Mock Safeguard**: Default mock mode prevents unintended API billing during development.
+- **Git Exclusion**: `.env`, `.venv`, and other local development artifacts are excluded through `.gitignore`.
+- **Environment Variables**: Credentials and configuration are loaded through environment variables.
+- **Managed Production Secret**: The Parallel Search API key is provided to the Cloud Run service through managed secret configuration.
+- **Zero Credential Exposure**: API keys are never returned in REST responses or intentionally logged.
+- **Offline Development Mode**: Local mock mode can be used to avoid unintended external API calls during development.
+- **Production Mode**: The deployed application uses live Gemini and Parallel integrations.
 
 ---
 
 ## 14. Hackathon Requirement Mapping
 
 | Requirement | CineOps AI Implementation |
-| :--- | :--- |
-| **Gemini / Google Cloud** | Built on Google ADK, Google GenAI SDK, and Vertex AI (`gemini-2.5-flash`). |
-| **Agentic Workflow** | Multi-agent collaboration between Screenplay Analyst Agent & Production Planner Agent. |
-| **Partner Integration** | Official Parallel Search API (`parallel-web` SDK) for film set safety research. |
-| **Real Media Workflow** | Converts raw screenplay PDFs into structured film production plans. |
-| **Web Dashboard** | Single-page command center UI served via FastAPI. |
-| **Open Source Repository** | Clean, documented codebase with comprehensive pytest suite. |
+|---|---|
+| Gemini / Google Cloud | Gemini 2.5 Flash through Vertex AI with Google ADK |
+| Agentic Workflow | Screenplay Analyst Agent + Production Planner Agent |
+| Partner Integration | Official Parallel Search API via parallel-web |
+| Real Media Workflow | Converts screenplay PDFs into structured production plans |
+| Web Dashboard | Interactive production command center served through FastAPI |
+| Open Source Repository | Public GitHub repository with MIT License and automated tests |
 
 ---
 
 ## 15. Why This Is Agentic
 
-CineOps AI goes beyond basic LLM prompts or simple wrappers:
+CineOps AI goes beyond a single LLM prompt or basic text summarization.
 
-1. **Multi-Agent Decomposition**: Separates creative screenplay analysis from logistically constrained production planning.
-2. **Autonomous Tool Usage**: Agents determine when external information (such as electrical codes or drone permits) is required and trigger Parallel Search API calls.
-3. **Structured State Synthesis**: Outputs are governed by strict Pydantic schemas, ensuring structured data flow between agents.
-4. **Algorithmic Grouping & Reasoning**: Synthesizes scene parameters into optimal shooting units and safety mitigation plans based on logical constraints.
+### 1. Multi-Agent Decomposition
+
+The system separates screenplay understanding from production planning.
+
+- Screenplay Analyst Agent identifies production-critical information.
+- Production Planner Agent converts that information and external research into an actionable plan.
+
+### 2. Autonomous Research
+
+The workflow derives production research requirements from screenplay-specific hazards and technical constraints and uses the Parallel Search API to obtain relevant external information.
+
+### 3. Structured State Synthesis
+
+Pydantic models enforce structured data exchange between screenplay analysis, research, and production planning.
+
+### 4. Production Reasoning
+
+The system combines location, time, resources, hazards, dependencies, and research findings to construct a practical production schedule and risk-management plan.
+
+### 5. Reconciliation
+
+The production-planning layer reconciles extracted screenplay information with generated planning data so that important scenes, locations, and resources are not silently lost.
 
 ---
 
 ## 16. Demo Walkthrough
 
-1. Open the **CineOps AI Dashboard** at `http://127.0.0.1:8000/`.
-2. Click **"Load Sample Script"** (or drag & drop a screenplay PDF).
-3. Click **"Analyze Screenplay & Build Plan"**.
-4. Observe the **3-stage progress modal** (*Analyst Agent ➔ Parallel Research ➔ Production Planner*).
-5. Review the **Screenplay Breakdown** tab with filterable scene cards (INT/EXT, Night).
-6. Explore the **Production Plan** dashboard:
-   - **Shooting Schedule**: Day-by-day scene allocations and hours.
-   - **Location Units**: Groupings minimizing physical unit moves.
-   - **Resource Matrix**: Gear, stunt equipment, and lighting needs.
-   - **Risk Management Matrix**: Categorized hazards and mitigation protocols.
-   - **Parallel Research Hub**: Live web search citations and safety guidelines.
+1. Open the CineOps AI Dashboard using the live Cloud Run deployment.
+2. Upload a screenplay PDF or click "Try Example Script".
+3. Start the screenplay analysis.
+4. Observe the workflow progress:
+   - Screenplay Analysis
+   - Parallel Research
+   - Production Planning
+5. Review the Screenplay Breakdown:
+   - Scenes
+   - Locations
+   - Characters
+   - Props
+   - Weather / Environment
+   - Production Requirements
+   - Risks
+6. Explore the Production Plan:
+   - Shooting Schedule
+   - Location Units
+   - Resource Matrix
+   - Risk Management Matrix
+   - Parallel Research Hub
+7. Review research-backed recommendations and production constraints.
+
+### Core Demo Story
+
+```text
+SCREENPLAY PDF
+      ↓
+AI SCREENPLAY ANALYSIS
+      ↓
+SCREENPLAY-SPECIFIC PARALLEL RESEARCH
+      ↓
+AI PRODUCTION PLANNING
+      ↓
+RESEARCH-BACKED SHOOTING PLAN
+```
 
 ---
 
 ## 17. Current Status & Roadmap
 
-### Completed Features
-* Screenplay text parsing & 11-parameter scene extraction
-* PDF screenplay file ingestion (`pypdf`)
-* Official Parallel Search API integration
-* Production Planner agentic workflow
-* FastAPI backend API with Pydantic validation
-* Dark cinematic web command center UI
-* 27 automated unit tests
+### Completed
 
-### Pending Work
-* Live Gemini API execution upon Google Cloud billing activation
-* Google Cloud Run container deployment
-* Final hackathon demo video recording
+- ✅ Screenplay text parsing and structured scene extraction
+- ✅ 11-parameter screenplay production breakdown
+- ✅ PDF screenplay ingestion
+- ✅ Google ADK agent workflow
+- ✅ Gemini 2.5 Flash through Vertex AI
+- ✅ Official Parallel Search API integration
+- ✅ Dynamic and deduplicated production research
+- ✅ Production Planner agent
+- ✅ Location and scene reconciliation
+- ✅ Resource reconciliation
+- ✅ Risk management
+- ✅ Shooting schedule generation
+- ✅ FastAPI backend
+- ✅ Production command center dashboard
+- ✅ Offline automated testing
+- ✅ Docker containerization
+- ✅ Google Cloud Run deployment
+- ✅ Live production execution with `CINEOPS_MOCK_MODE=0`
+
+### Roadmap
+
+- Intelligent location scouting
+- Crew and equipment optimization
+- Budget estimation
+- Permit and compliance workflows
+- Automated call-sheet generation
+- Weather-aware scheduling
+- Advanced production cost forecasting
+- Collaborative production planning for film teams
 
 ---
 
 ## 18. License
 
-This project is open-source and licensed under the **[MIT License](LICENSE)**. See the `LICENSE` file in the repository root for full details.
+This project is open-source and licensed under the MIT License.
+
+See the `LICENSE` file in the repository root for the full license text.
 
 ---
 
 ## 19. Contributing
 
-Contributions are welcome! Please feel free to open an issue or submit a pull request on the [GitHub Repository](https://github.com/aastha-yadav2/CineopsAI).
+Contributions are welcome.
+
+To contribute:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Add or update tests where appropriate.
+5. Submit a pull request.
+
+Please open an issue for bugs, feature requests, or technical discussions.
 
 ---
 
 ## 20. Acknowledgements
 
-* **Google Cloud & Vertex AI**: For agentic LLM infrastructure.
-* **Google ADK & GenAI SDK**: For agent orchestration frameworks.
-* **Parallel**: For real-time web search capabilities.
-* **FastAPI & Pydantic**: For backend API infrastructure.
+- **Google Cloud & Vertex AI** — for Gemini infrastructure and cloud deployment.
+- **Google ADK** — for agent orchestration and tool-based workflows.
+- **Gemini 2.5 Flash** — for screenplay analysis and production planning.
+- **Parallel** — for real-time external web research.
+- **FastAPI & Pydantic** — for backend API infrastructure and structured validation.
+- **pypdf** — for screenplay PDF extraction.
+
+---
+
+## Live Demo
+
+**CineOps AI**: https://cineops-ai-408484150701.us-central1.run.app
+
+**GitHub Repository**: https://github.com/aastha-yadav2/CineopsAI
+
+**License**: MIT
